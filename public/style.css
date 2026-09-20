@@ -1,0 +1,27 @@
+:root{--ink:#2f2420;--cream:#f7f1e8;--paper:#fffdfa;--line:#e8ddd0;--gold:#a27a4c;--muted:#8e8176}
+*{box-sizing:border-box}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:Inter,Arial,sans-serif}
+button,input{font:inherit}.hidden{display:none!important}
+.app{max-width:1120px;margin:auto;padding:28px 20px 80px}
+.brand{display:flex;gap:12px;align-items:center}.brand.center{justify-content:center;text-align:left}
+.logoMark{width:44px;height:44px;border-radius:14px;background:var(--ink);color:white;display:grid;place-items:center;font-weight:900}
+.brand h1{font-size:16px;letter-spacing:2px;margin:0}.brand p{margin:4px 0 0;font-size:11px;opacity:.55}
+header{display:flex;justify-content:space-between;align-items:center;margin-bottom:70px}
+.headerRight{display:flex;gap:10px;align-items:center}.serverDot{width:7px;height:7px;border-radius:50%;background:#6e9c73}
+.status,.miniButton{font-size:10px;letter-spacing:1.5px;border:1px solid var(--line);border-radius:99px;padding:9px 12px;background:transparent;color:var(--ink)}
+.miniButton{cursor:pointer;letter-spacing:.5px}
+.eyebrow,.label{font-size:10px;letter-spacing:2px;color:var(--gold);font-weight:900}
+.hero{max-width:720px;margin-bottom:30px}.hero h2{font-size:clamp(40px,7vw,76px);line-height:.95;letter-spacing:-4px;margin:12px 0}.hero h2 em,
+.hero p,.muted{max-width:650px;line-height:1.7;opacity:.65}
+.workspace{display:grid;grid-template-columns:1fr 1fr;gap:18px}.card{background:var(--paper);border:1px solid var(--line);border-radius:24px;padding:20px;box-shadow:0 15px 50px #2f242008}
+.drop{height:330px;border:1.5px dashed #cbbca9;border-radius:18px;background:#fcf8f2;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;cursor:pointer}
+.plus{font-size:42px;margin-bottom:10px}.drop span,.drop small,.brandUpload span{display:block;font-size:12px;opacity:.55;margin-top:7px}.drop small{color:var(--gold);opacity:1}
+.brandUpload{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:14px 0;margin:15px 0}
+.brandUpload b{font-size:13px}.choose,.ghost{border:1px solid var(--line);background:white;border-radius:11px;padding:9px 13px;cursor:pointer;font-weight:700;color:var(--ink)}
+#go,#connectBtn{width:100%;border:0;border-radius:13px;background:var(--ink);color:white;padding:15px;font-weight:900;cursor:pointer}#go:disabled{opacity:.35}
+.preview{min-height:390px}.top{display:flex;justify-content:space-between;font-size:12px;opacity:.65;margin-bottom:14px}.preview #previewBox{height:345px;border-radius:18px;background:#f2ebe2;display:grid;place-items:center;color:#9d8d7d;overflow:hidden}.preview img{width:100%;height:100%;object-fit:contain}
+.progress{margin-top:18px}.progressHead{display:flex;justify-content:space-between}.progressSub{font-size:12px;color:var(--muted)}
+.steps{display:grid;grid-template-columns:1fr 1fr;gap:10px 20px;margin:20px 0}.steps div{display:flex;justify-content:space-between;border-bottom:1px solid var(--line);padding:9px 0;font-size:12px}.steps i{font-style:normal;color:var(--muted)}.steps .active i{color:var(--gold)}.steps .done i{color:#557e5c}.bar{height:6px;background:#eee3d5;border-radius:99px;overflow:hidden}.bar i{display:block;width:0;height:100%;background:var(--ink);transition:width .4s}
+#result{margin-top:60px}.resultTop{display:flex;justify-content:space-between;align-items:end;margin-bottom:18px}.resultTop h3{font-size:30px;margin:8px 0}.images{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.imageCard{background:var(--paper);border:1px solid var(--line);border-radius:18px;overflow:hidden}.imageCard img{width:100%;aspect-ratio:1;object-fit:cover;display:block}.imageCard p{margin:0;padding:12px;font-size:10px;font-weight:900;letter-spacing:1.5px}.copyGrid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px}.copyGrid pre{white-space:pre-wrap;font:13px/1.7 Arial;min-height:100px}.copy{margin-top:8px}
+
+@media(max-width:800px){.workspace,.copyGrid{grid-template-columns:1fr}.images{grid-template-columns:1fr 1fr}.steps{grid-template-columns:1fr}header{margin-bottom:40px}}

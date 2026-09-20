@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PRIYANKA LAB — AI Beauty Content Studio</title>
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div id="app" class="app">
+<header>
+  <div class="brand">
+    <div class="logoMark">PL</div>
+    <div><h1>PRIYANKA LAB</h1><p>AI Beauty Content Studio</p></div>
+  </div>
+  <div class="headerRight"><span class="serverDot"></span><span class="status">WEB APP • LIVE AI</span></div>
+</header>
+
+<section class="hero">
+  <div class="eyebrow">ONE PHOTO → COMPLETE CONTENT PACK</div>
+  <h2>Your work.<br><em>Professionally presented.</em></h2>
+  <p>Upload one normal phone photo. Priyanka Lab protects the real work, creates four Instagram-ready presentations and writes the post copy.</p>
+</section>
+
+<section class="workspace">
+  <div class="card">
+    <label class="drop" id="drop">
+      <input id="photo" type="file" accept="image/*" hidden>
+      <div class="plus">+</div><b>Upload your work</b>
+      <span>Mehndi or Nails • JPG / PNG</span>
+      <small id="fileName">No photo selected</small>
+    </label>
+    <div class="brandUpload">
+      <div><b>Brand logo</b><span>Optional • exact logo overlay</span></div>
+      <label class="choose">Choose<input id="logo" type="file" accept="image/*" hidden></label>
+    </div>
+    <button id="go" disabled>Create 4 AI Presentations ✦</button>
+  </div>
+
+  <div class="card preview">
+    <div class="top"><b>Source preview</b><span id="state">Waiting</span></div>
+    <div id="previewBox">Upload a photo to begin</div>
+  </div>
+</section>
+
+<section class="card progress hidden" id="progress">
+  <div class="progressHead"><b>PRIYANKA LAB</b><span id="progressPercent">0%</span></div>
+  <p class="progressSub">Your content pack is being created. Keep this window open.</p>
+  <div class="steps" id="steps">
+    <div data-step="analysis"><span>Analyzing your photo…</span><i>○</i></div>
+    <div data-step="quality"><span>Checking quality…</span><i>○</i></div>
+    <div data-step="hero"><span>Creating HERO…</span><i>○</i></div>
+    <div data-step="detail"><span>Creating DETAIL…</span><i>○</i></div>
+    <div data-step="aesthetic"><span>Creating AESTHETIC…</span><i>○</i></div>
+    <div data-step="editorial"><span>Creating EDITORIAL…</span><i>○</i></div>
+    <div data-step="logo"><span>Applying real logo…</span><i>○</i></div>
+    <div data-step="copy"><span>Preparing caption & hashtags…</span><i>○</i></div>
+  </div>
+  <div class="bar"><i id="bar"></i></div>
+</section>
+
+<section id="result" class="hidden">
+  <div class="resultTop">
+    <div><div class="eyebrow">POST PACK READY ✦</div><h3 id="title">—</h3></div>
+    <button class="ghost" id="download">Download All</button>
+  </div>
+  <div id="images" class="images"></div>
+  <div class="copyGrid">
+    <div class="card copyCard"><div class="label">CAPTION</div><pre id="caption"></pre><button class="ghost copy" data-id="caption">Copy Caption</button></div>
+    <div class="card copyCard"><div class="label">HASHTAGS</div><pre id="hashtags"></pre><button class="ghost copy" data-id="hashtags">Copy Hashtags</button></div>
+  </div>
+</section>
+</div>
+<script src="/app.js"></script>
+</body>
+</html>
