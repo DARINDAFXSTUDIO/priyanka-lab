@@ -25,3 +25,11 @@ header{display:flex;justify-content:space-between;align-items:center;margin-bott
 #result{margin-top:60px}.resultTop{display:flex;justify-content:space-between;align-items:end;margin-bottom:18px}.resultTop h3{font-size:30px;margin:8px 0}.images{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.imageCard{background:var(--paper);border:1px solid var(--line);border-radius:18px;overflow:hidden}.imageCard img{width:100%;aspect-ratio:1;object-fit:cover;display:block}.imageCard p{margin:0;padding:12px;font-size:10px;font-weight:900;letter-spacing:1.5px}.copyGrid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px}.copyGrid pre{white-space:pre-wrap;font:13px/1.7 Arial;min-height:100px}.copy{margin-top:8px}
 
 @media(max-width:800px){.workspace,.copyGrid{grid-template-columns:1fr}.images{grid-template-columns:1fr 1fr}.steps{grid-template-columns:1fr}header{margin-bottom:40px}}
+
+/* BYOK connection panel */
+.connectCard{display:flex;gap:24px;align-items:center;justify-content:space-between;margin-bottom:22px}
+.connectText{flex:1}.connectText h3{margin:5px 0 6px}.connectText p{margin:0;opacity:.72;max-width:650px;line-height:1.5}
+.connectControls{display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:flex-end}.connectControls input{width:min(390px,70vw);padding:13px 14px;border:1px solid rgba(90,60,40,.18);border-radius:12px;background:#fffaf2;color:#3c271c;outline:none}.connectControls input:focus{border-color:#9b7757}.connectCard.connectedCard{border-color:rgba(91,126,82,.35)}
+.serverDot.connected{background:#5d8756!important;box-shadow:0 0 0 4px rgba(93,135,86,.12)}
+.hidden{display:none!important}
+@media(max-width:800px){.connectCard{align-items:flex-start;flex-direction:column}.connectControls{width:100%;justify-content:flex-start}.connectControls input{width:100%}}

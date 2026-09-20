@@ -13,8 +13,13 @@
     <div class="logoMark">PL</div>
     <div><h1>PRIYANKA LAB</h1><p>AI Beauty Content Studio</p></div>
   </div>
-  <div class="headerRight"><span class="serverDot"></span><span class="status">WEB APP • LIVE AI</span></div>
+  <div class="headerRight"><span id="connectionDot" class="serverDot"></span><span id="connectStatus" class="status">AI NOT CONNECTED</span></div>
 </header>
+
+<section class="card connectCard" id="connectCard">
+  <div class="connectText"><div class="label">YOUR AI CONNECTION</div><h3>Use your own OpenAI account</h3><p>Your API key is used for your AI requests. PRIYANKA LAB does not save it to a database or localStorage.</p></div>
+  <div class="connectControls"><input id="apiKey" type="password" autocomplete="off" placeholder="Paste your OpenAI API key"> <button id="connectBtn">Verify & Connect</button><button id="disconnectBtn" class="ghost hidden">Disconnect</button></div>
+</section>
 
 <section class="hero">
   <div class="eyebrow">ONE PHOTO → COMPLETE CONTENT PACK</div>

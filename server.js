@@ -14,12 +14,39 @@ const upload = multer({
   limits: { fileSize: 15 * 1024 * 1024 }
 });
 
-const client = process.env.OPENAI_API_KEY
-  ? new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
-  : null;
-
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "public")));
+
+// BYOK sessions: API keys live only in server memory and are never written to disk/database.
+// Sessions are intentionally lost when the server restarts.
+const sessions = new Map();
+const SESSION_TTL_MS = 60 * 60 * 1000;
+
+function getSession(req) {
+  const token = req.headers["x-priyanka-session"];
+  if (!token) return null;
+  const session = sessions.get(token);
+  if (!session) return null;
+  if (Date.now() - session.createdAt > SESSION_TTL_MS) {
+    sessions.delete(token);
+    return null;
+  }
+  return session;
+}
+
+function requireClient(req, res) {
+  const session = getSession(req);
+  if (!session) {
+    res.status(401).json({ error: "Connect your OpenAI API key first." });
+    return null;
+  }
+  session.createdAt = Date.now();
+  return session.client;
+}
+
+function randomToken() {
+  return `${Date.now().toString(36)}-${Math.random().toString(36).slice(2)}-${Math.random().toString(36).slice(2)}`;
+}
 
 const version = "3.0-web";
 const TEXT_MODEL = process.env.OPENAI_TEXT_MODEL || "gpt-5.6-luna";
@@ -31,6 +58,38 @@ app.get("/api/health", (_req, res) => {
     status: "online",
     version
   });
+});
+
+app.post("/api/auth/verify", async (req, res) => {
+  try {
+    const apiKey = String(req.body?.apiKey || "").trim();
+    if (!apiKey) return res.status(400).json({ error: "OpenAI API key is required." });
+    if (!/^sk-[A-Za-z0-9_-]+$/.test(apiKey)) {
+      return res.status(400).json({ error: "That does not look like a valid OpenAI API key." });
+    }
+
+    const testClient = new OpenAI({ apiKey });
+    await testClient.models.list();
+
+    const token = randomToken();
+    sessions.set(token, { client: testClient, createdAt: Date.now() });
+
+    res.json({ connected: true, session: token, expiresInMs: SESSION_TTL_MS });
+  } catch (error) {
+    console.error("BYOK verification failed:", error.message);
+    res.status(401).json({ error: "OpenAI rejected this API key. Check the key and try again." });
+  }
+});
+
+app.get("/api/auth/status", (req, res) => {
+  const session = getSession(req);
+  res.json({ connected: Boolean(session) });
+});
+
+app.post("/api/auth/disconnect", (req, res) => {
+  const token = req.headers["x-priyanka-session"];
+  if (token) sessions.delete(token);
+  res.json({ connected: false });
 });
 
 const analysisPrompt = `You are PRIYANKA LAB, an AI beauty-content studio.
@@ -60,7 +119,8 @@ Rules:
 
 app.post("/api/analyze", upload.single("photo"), async (req, res) => {
   try {
-    if (!client) return res.status(503).json({ error: "OPENAI_API_KEY is not configured." });
+    const client = requireClient(req, res);
+    if (!client) return;
     if (!req.file) return res.status(400).json({ error: "Photo missing." });
 
     const b64 = req.file.buffer.toString("base64");
@@ -116,8 +176,7 @@ Do not invent hidden details, redesign the work, change nail art, change Mehndi,
 No text. No logo.`
 };
 
-async function editImage(buffer, mime, prompt) {
-  if (!client) throw new Error("OPENAI_API_KEY is not configured.");
+async function editImage(client, buffer, mime, prompt) {
   const result = await client.images.edit({
     model: IMAGE_MODEL,
     image: new File([buffer], "source-image", { type: mime }),
@@ -148,6 +207,8 @@ app.post("/api/generate/:variant", upload.fields([
   { name: "logo", maxCount: 1 }
 ]), async (req, res) => {
   try {
+    const client = requireClient(req, res);
+    if (!client) return;
     const photo = req.files?.photo?.[0];
     const logo = req.files?.logo?.[0]?.buffer;
     const variant = req.params.variant.toLowerCase();
@@ -155,7 +216,7 @@ app.post("/api/generate/:variant", upload.fields([
     if (!photo) return res.status(400).json({ error: "Photo missing." });
     if (!prompts[variant]) return res.status(400).json({ error: "Unknown variant." });
 
-    let img = await editImage(photo.buffer, photo.mimetype, prompts[variant]);
+    let img = await editImage(client, photo.buffer, photo.mimetype, prompts[variant]);
     img = await applyLogo(img, logo);
 
     res.json({
