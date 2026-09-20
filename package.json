@@ -1,16 +1,17 @@
 {
-  "name": "priyanka-lab-v3",
+  "name": "priyanka-lab",
   "version": "3.0.0",
   "private": true,
-  "type": "module",
+  "description": "PRIYANKA LAB - AI Beauty Content Studio",
+  "main": "server.js",
   "scripts": {
-  "start": "node server.js",
-  "dev": "node --watch server.js"
-}
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
   "dependencies": {
-    "express": "^5.1.0",
-    "multer": "^2.0.2",
-    "openai": "^5.12.0",
-    "sharp": "^0.34.3"
+    "express": "^4.21.2",
+    "multer": "^1.4.5-lts.1",
+    "openai": "^4.104.0",
+    "sharp": "^0.33.5"
   }
 }
